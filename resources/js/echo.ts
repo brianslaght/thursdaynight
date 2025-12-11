@@ -15,10 +15,16 @@ function readMeta(name: string): string | null {
     return document.querySelector(`meta[name="${name}"]`)?.getAttribute('content') ?? null;
 }
 
-const defaultScheme =
-    typeof window !== 'undefined' && window.location?.protocol === 'https:' ? 'https' : 'http';
-const reverbScheme =
-    import.meta.env.VITE_REVERB_SCHEME ?? readMeta('reverb-scheme') ?? defaultScheme;
+const pageIsSecure =
+    typeof window !== 'undefined' && window.location?.protocol === 'https:';
+
+const configuredScheme =
+    import.meta.env.VITE_REVERB_SCHEME ??
+    readMeta('reverb-scheme') ??
+    (pageIsSecure ? 'https' : 'http');
+
+// Browsers block ws:// from https pages (mixed content). If the page is https, force wss.
+const reverbScheme = pageIsSecure ? 'https' : configuredScheme;
 const useTLS = reverbScheme === 'https';
 
 const defaultHost =

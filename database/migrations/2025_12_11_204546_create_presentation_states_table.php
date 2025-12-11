@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('content_index')->default(0);
 
             // Scripture expansion state (JSON array of "sectionIdx-contentIdx" keys)
-            $table->json('expanded_scriptures')->default('[]');
+            $table->json('expanded_scriptures')->nullable();
 
             // Question highlight state (when set, only this question shows fullscreen)
             $table->integer('highlighted_question_index')->nullable();

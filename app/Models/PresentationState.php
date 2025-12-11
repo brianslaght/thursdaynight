@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PresentationState extends Model
 {
+    protected $attributes = [
+        'expanded_scriptures' => '[]',
+    ];
+
     protected $fillable = [
         'week_id',
         'section_index',
