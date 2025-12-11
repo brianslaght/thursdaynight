@@ -1,6 +1,7 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { type SharedData } from '@/types';
+import MemoryVerse from '@/components/study/MemoryVerse';
 
 interface ContentItem {
     type: 'body' | 'scripture' | 'prompts' | 'leaderNote' | 'callout';
@@ -23,6 +24,8 @@ interface Week {
     title: string;
     question: string;
     icon: string;
+    memory_verse: string | null;
+    memory_verse_ref: string | null;
     recap: string | null;
     next_week_title: string | null;
     next_week_homework: string | null;
@@ -214,6 +217,15 @@ export default function WeekDetail({ series, week, isLeader, totalWeeks }: Props
                                     {showLeaderMode ? '🔑 Leader Mode ON' : '👤 Participant Mode'}
                                 </button>
                             </div>
+                        )}
+
+                        {/* Memory Verse */}
+                        {week.memory_verse && week.memory_verse_ref && (
+                            <MemoryVerse
+                                verse={week.memory_verse}
+                                reference={week.memory_verse_ref}
+                                weekId={week.id}
+                            />
                         )}
 
                         {/* Recap */}

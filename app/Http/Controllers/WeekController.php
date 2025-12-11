@@ -31,6 +31,8 @@ class WeekController extends Controller
                 'title' => $week->title,
                 'question' => $week->question,
                 'icon' => $week->icon,
+                'memory_verse' => $week->memory_verse,
+                'memory_verse_ref' => $week->memory_verse_ref,
                 'recap' => $week->recap,
                 'next_week_title' => $week->next_week_title,
                 'next_week_homework' => $week->next_week_homework,

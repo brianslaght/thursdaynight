@@ -36,6 +36,8 @@ class SeriesSeeder extends Seeder
                 'title' => $data['title'],
                 'question' => $data['question'],
                 'icon' => $data['icon'] ?? '📖',
+                'memory_verse' => $data['memoryVerse']['text'] ?? null,
+                'memory_verse_ref' => $data['memoryVerse']['ref'] ?? null,
                 'recap' => $data['recap'] ?? null,
                 'next_week_title' => $data['nextWeek']['title'] ?? null,
                 'next_week_homework' => $data['nextWeek']['homework'] ?? null,
@@ -51,6 +53,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Why We Gather',
                 'question' => 'Why are we here, and what do we expect from life together?',
                 'icon' => '🤔',
+                'memoryVerse' => [
+                    'text' => 'Two are better than one, because they have a good reward for their toil. For if they fall, one will lift up his fellow.',
+                    'ref' => 'Ecclesiastes 4:9-10',
+                ],
                 'recap' => null,
                 'nextWeek' => [
                     'title' => 'Called to Community',
@@ -148,6 +154,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Called to Community',
                 'question' => "How is God's very nature a model for our togetherness—and our limits?",
                 'icon' => '✨',
+                'memoryVerse' => [
+                    'text' => 'That they may all be one, just as you, Father, are in me, and I in you, that they also may be in us, so that the world may believe that you have sent me.',
+                    'ref' => 'John 17:21',
+                ],
                 'recap' => "Last week we examined our expectations and saw that God designed us for relationship from the very beginning. We recognized that our choice to invest in THIS community matters because our capacity for deep relationships is limited.",
                 'nextWeek' => [
                     'title' => 'Marks of True Community',
@@ -245,6 +255,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Marks of True Community',
                 'question' => 'What does biblical fellowship actually look like in practice?',
                 'icon' => '💎',
+                'memoryVerse' => [
+                    'text' => 'A new commandment I give to you, that you love one another: just as I have loved you, you also are to love one another. By this all people will know that you are my disciples, if you have love for one another.',
+                    'ref' => 'John 13:34-35',
+                ],
                 'recap' => "Last week we discovered that community reflects God's Trinitarian nature. We also learned that even Jesus operated in concentric circles—going deepest with the few. We explored biblical criteria for our inner circles: shared faith, shared direction, wisdom, mutual investment, and Spirit-led discernment.",
                 'nextWeek' => [
                     'title' => 'Barriers to Community',
@@ -336,6 +350,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Barriers to Community',
                 'question' => 'What keeps us from the depth God intends for His people?',
                 'icon' => '🚧',
+                'memoryVerse' => [
+                    'text' => 'There is no fear in love, but perfect love casts out fear. For fear has to do with punishment, and whoever fears has not been perfected in love.',
+                    'ref' => '1 John 4:18',
+                ],
                 'recap' => "Last week we examined the 'one another' commands—over 50 ways Scripture calls us to love, encourage, serve, bear burdens, and confess with each other. We recognized that these commands REQUIRE deep investment, which is why choosing your inner circles wisely matters.",
                 'nextWeek' => [
                     'title' => 'Fruit of Community',
@@ -459,6 +477,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Fruit of Community',
                 'question' => 'What does healthy, focused community actually produce?',
                 'icon' => '🌱',
+                'memoryVerse' => [
+                    'text' => 'Iron sharpens iron, and one man sharpens another.',
+                    'ref' => 'Proverbs 27:17',
+                ],
                 'recap' => "Last week we confronted barriers to deep community—fear, pride, sin, busyness, and over-extension. We saw that Jesus breaks down dividing walls and empowers us to do the same.",
                 'nextWeek' => [
                     'title' => 'Committing to Community',
@@ -563,6 +585,10 @@ class SeriesSeeder extends Seeder
                 'title' => 'Committing to Community',
                 'question' => 'Are we ready to choose these people, this place, this investment?',
                 'icon' => '🤝',
+                'memoryVerse' => [
+                    'text' => 'Behold, how good and pleasant it is when brothers dwell together in unity!',
+                    'ref' => 'Psalm 133:1',
+                ],
                 'recap' => "Last week we celebrated the fruit of deep community—spiritual growth, accountability, comfort, joy, and mission. We recognized that these fruits only grow from deep roots.",
                 'nextWeek' => null,
                 'sections' => [

@@ -13,6 +13,8 @@ class Week extends Model
         'title',
         'question',
         'icon',
+        'memory_verse',
+        'memory_verse_ref',
         'recap',
         'next_week_title',
         'next_week_homework',
