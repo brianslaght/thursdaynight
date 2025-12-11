@@ -2,6 +2,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { type SharedData } from '@/types';
 import MemoryVerse from '@/components/study/MemoryVerse';
+import QRCodeButton from '@/components/study/QRCodeButton';
 
 interface ContentItem {
     type: 'body' | 'scripture' | 'prompts' | 'leaderNote' | 'callout';
@@ -181,13 +182,16 @@ export default function WeekDetail({ series, week, isLeader, totalWeeks }: Props
 
                     {/* Content */}
                     <main className="mx-auto max-w-[42rem] px-6 pb-32">
-                        {/* Back Button */}
-                        <Link
-                            href={`/series/${series.slug}`}
-                            className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-transparent bg-[#1e1e32] px-6 py-3 text-[#c4c4d4] transition-all hover:border-[#a78bfa] hover:bg-[#2a2a45] hover:text-[#f8f8ff]"
-                        >
-                            <span>←</span> Back to Weeks
-                        </Link>
+                        {/* Top Bar: Back Button & QR Code */}
+                        <div className="mt-6 flex items-center justify-between">
+                            <Link
+                                href={`/series/${series.slug}`}
+                                className="inline-flex items-center gap-2 rounded-full border-2 border-transparent bg-[#1e1e32] px-6 py-3 text-[#c4c4d4] transition-all hover:border-[#a78bfa] hover:bg-[#2a2a45] hover:text-[#f8f8ff]"
+                            >
+                                <span>←</span> Back to Weeks
+                            </Link>
+                            <QRCodeButton />
+                        </div>
 
                         {/* Header */}
                         <header className="py-8 text-center">
@@ -204,7 +208,7 @@ export default function WeekDetail({ series, week, isLeader, totalWeeks }: Props
 
                         {/* Leader Mode Toggle */}
                         {canToggleLeaderMode && (
-                            <div className="mb-8 flex justify-center">
+                            <div className="mb-8 flex flex-col items-center gap-4">
                                 <button
                                     onClick={() => setShowLeaderMode(!showLeaderMode)}
                                     className={`rounded-full border-2 border-[#fbbf24] px-6 py-3 font-semibold transition-all ${
@@ -216,16 +220,25 @@ export default function WeekDetail({ series, week, isLeader, totalWeeks }: Props
                                 >
                                     {showLeaderMode ? '🔑 Leader Mode ON' : '👤 Participant Mode'}
                                 </button>
-                            </div>
-                        )}
 
-                        {/* Memory Verse */}
-                        {week.memory_verse && week.memory_verse_ref && (
-                            <MemoryVerse
-                                verse={week.memory_verse}
-                                reference={week.memory_verse_ref}
-                                weekId={week.id}
-                            />
+                                {/* Presentation Controls */}
+                                <div className="flex gap-3">
+                                    <Link
+                                        href={`/series/${series.slug}/week/${week.week_number}/control`}
+                                        className="rounded-full bg-gradient-to-r from-[#a78bfa] to-[#f472b6] px-6 py-3 font-semibold text-white transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-[#a78bfa]/40"
+                                    >
+                                        Launch Presentation
+                                    </Link>
+                                    <a
+                                        href={`/series/${series.slug}/week/${week.week_number}/present`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="rounded-full border-2 border-[#a78bfa] bg-[#1e1e32] px-6 py-3 font-semibold text-[#f8f8ff] transition-all hover:bg-[#a78bfa]/10"
+                                    >
+                                        View Only
+                                    </a>
+                                </div>
+                            </div>
                         )}
 
                         {/* Recap */}
@@ -321,6 +334,17 @@ export default function WeekDetail({ series, week, isLeader, totalWeeks }: Props
                                     </div>
                                 )}
                             </aside>
+                        )}
+
+                        {/* Memory Verse - At Bottom */}
+                        {week.memory_verse && week.memory_verse_ref && (
+                            <div className="mt-12">
+                                <MemoryVerse
+                                    verse={week.memory_verse}
+                                    reference={week.memory_verse_ref}
+                                    weekId={week.id}
+                                />
+                            </div>
                         )}
 
                         {/* Navigation */}

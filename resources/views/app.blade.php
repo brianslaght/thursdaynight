@@ -39,6 +39,12 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
+        {{-- Reverb/Echo configuration (fallback for when VITE_REVERB_* is not set) --}}
+        <meta name="reverb-app-key" content="{{ config('broadcasting.connections.reverb.key') }}">
+        <meta name="reverb-host" content="{{ config('broadcasting.connections.reverb.options.host') }}">
+        <meta name="reverb-port" content="{{ config('broadcasting.connections.reverb.options.port') }}">
+        <meta name="reverb-scheme" content="{{ config('broadcasting.connections.reverb.options.scheme') }}">
+
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
