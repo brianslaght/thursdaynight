@@ -32,13 +32,13 @@ return [
             'host' => env('REVERB_SERVER_HOST', '0.0.0.0'),
             'port' => env('REVERB_SERVER_PORT', 8080),
             'path' => env('REVERB_SERVER_PATH', ''),
-            'hostname' => env('REVERB_HOST', 'localhost'),
+            'hostname' => env('REVERB_HOST'),
             'options' => [
-                'tls' => [
+                'tls' => env('REVERB_TLS_CERT') ? [
                     'local_cert' => env('REVERB_TLS_CERT'),
                     'local_pk' => env('REVERB_TLS_KEY'),
                     'verify_peer' => false,
-                ],
+                ] : [],
             ],
             'max_request_size' => env('REVERB_MAX_REQUEST_SIZE', 10_000),
             'scaling' => [
@@ -77,17 +77,14 @@ return [
 
         'apps' => [
             [
-                // Provide local-dev fallbacks so the server & clients can connect even if env vars are missing.
-                // IMPORTANT: set real values in your environment for production deployments.
-                'key' => env('REVERB_APP_KEY', 'local'),
-                'secret' => env('REVERB_APP_SECRET', 'local'),
-                'app_id' => env('REVERB_APP_ID', 'local'),
+                'key' => env('REVERB_APP_KEY'),
+                'secret' => env('REVERB_APP_SECRET'),
+                'app_id' => env('REVERB_APP_ID'),
                 'options' => [
-                    'host' => env('REVERB_HOST', 'localhost'),
-                    // Reverb runs on 8080 (ws) by default in local dev.
-                    'port' => env('REVERB_PORT', env('APP_ENV') === 'local' ? 8080 : 443),
-                    'scheme' => env('REVERB_SCHEME', env('APP_ENV') === 'local' ? 'http' : 'https'),
-                    'useTLS' => env('REVERB_SCHEME', env('APP_ENV') === 'local' ? 'http' : 'https') === 'https',
+                    'host' => env('REVERB_HOST'),
+                    'port' => env('REVERB_PORT', 443),
+                    'scheme' => env('REVERB_SCHEME', 'https'),
+                    'useTLS' => env('REVERB_SCHEME', 'https') === 'https',
                 ],
                 'allowed_origins' => ['*'],
                 'ping_interval' => env('REVERB_APP_PING_INTERVAL', 60),
