@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_leader',
     ];
 
     /**
@@ -47,6 +48,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'is_leader' => 'boolean',
         ];
+    }
+
+    public function isLeader(): bool
+    {
+        return $this->is_leader ?? false;
     }
 }

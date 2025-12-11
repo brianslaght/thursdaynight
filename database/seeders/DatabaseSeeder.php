@@ -3,25 +3,26 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Create the leader user
         User::firstOrCreate(
-            ['email' => 'test@example.com'],
+            ['email' => 'brian@brianslaght.com'],
             [
-                'name' => 'Test User',
-                'password' => 'password',
+                'name' => 'Brian Slaght',
+                'password' => 'Tjrnb9093322!!',
                 'email_verified_at' => now(),
+                'is_leader' => true,
             ]
         );
+
+        // Seed the series data
+        $this->call([
+            SeriesSeeder::class,
+        ]);
     }
 }

@@ -141,3 +141,60 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Thursday Night Bible Study Custom Styles */
+:root {
+    /* Thursday Night Theme Colors */
+    --tn-bg-dark: #121220;
+    --tn-bg-card: #1e1e32;
+    --tn-bg-card-hover: #2a2a45;
+    --tn-bg-elevated: #252540;
+
+    /* Accent Colors */
+    --tn-accent-purple: #a78bfa;
+    --tn-accent-pink: #f472b6;
+    --tn-accent-orange: #fb923c;
+    --tn-accent-yellow: #fbbf24;
+    --tn-accent-green: #4ade80;
+    --tn-accent-blue: #60a5fa;
+
+    /* Text Colors */
+    --tn-text-primary: #f8f8ff;
+    --tn-text-secondary: #c4c4d4;
+    --tn-text-muted: #9494a8;
+
+    /* Highlight */
+    --tn-highlight-bg: rgba(251, 191, 36, 0.25);
+    --tn-highlight-text: #fcd34d;
+}
+
+/* Scripture highlight styling */
+.scripture-highlight {
+    background: var(--tn-highlight-bg);
+    color: var(--tn-highlight-text);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Thursday Night specific page styling */
+.tn-page {
+    background: var(--tn-bg-dark);
+    min-height: 100vh;
+}
+
+.tn-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(167, 139, 250, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(244, 114, 182, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.tn-content {
+    position: relative;
+    z-index: 1;
+}
