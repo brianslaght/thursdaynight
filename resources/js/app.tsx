@@ -1,5 +1,6 @@
 import '../css/app.css';
-import './echo';
+// Echo is loaded lazily only on presentation pages that need real-time updates
+// See: hooks/use-presentation.ts
 
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';

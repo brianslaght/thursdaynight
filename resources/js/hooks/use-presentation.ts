@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { initializeEcho } from '@/echo';
 import type { PresentationState, PresentationEvent } from '@/types/presentation';
 
 interface UsePresentationOptions {
@@ -11,22 +12,24 @@ export function usePresentation({ weekId, initialState, isController = false }: 
     const [state, setState] = useState<PresentationState>(initialState);
     const [isConnected, setIsConnected] = useState(false);
     const [connectionIssue, setConnectionIssue] = useState<string | null>(null);
-    const channelRef = useRef<ReturnType<typeof window.Echo.channel> | null>(null);
+    const channelRef = useRef<ReturnType<NonNullable<typeof window.Echo>['channel']> | null>(null);
 
-    // Subscribe to channel
+    // Subscribe to channel - initialize Echo lazily here
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        if (!window.Echo) {
+
+        // Initialize Echo only when this hook is used (presentation pages)
+        const echo = initializeEcho();
+
+        if (!echo) {
             setIsConnected(false);
-            setConnectionIssue('Echo not initialized (window.Echo is missing)');
-            console.error('[Presentation] Echo not initialized. Check echo.ts init logs.', {
-                echoDebug: (window as any).__ECHO_DEBUG__,
-            });
+            setConnectionIssue('Real-time updates unavailable (Reverb not configured)');
+            console.warn('[Presentation] Echo not available - presentation will work without real-time sync');
             return;
         }
         setConnectionIssue(null);
 
-        const channel = window.Echo.channel(`presentation.${weekId}`);
+        const channel = echo.channel(`presentation.${weekId}`);
         channelRef.current = channel;
 
         channel
@@ -45,7 +48,7 @@ export function usePresentation({ weekId, initialState, isController = false }: 
             });
 
         return () => {
-            window.Echo.leave(`presentation.${weekId}`);
+            echo?.leave(`presentation.${weekId}`);
         };
     }, [weekId]);
 
