@@ -40,10 +40,25 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         {{-- Reverb/Echo configuration (fallback for when VITE_REVERB_* is not set) --}}
-        <meta name="reverb-app-key" content="{{ config('broadcasting.connections.reverb.key') }}">
-        <meta name="reverb-host" content="{{ config('broadcasting.connections.reverb.options.host') }}">
-        <meta name="reverb-port" content="{{ config('broadcasting.connections.reverb.options.port') }}">
-        <meta name="reverb-scheme" content="{{ config('broadcasting.connections.reverb.options.scheme') }}">
+        @php
+            // These should represent the *public* connection details the browser should use.
+            // In Herd, Reverb may run on 8080 internally but be served to the browser on 443 via TLS/proxy.
+            $reverbKey = config('broadcasting.connections.reverb.key');
+            $reverbHost = config('broadcasting.connections.reverb.options.host') ?: request()->getHost();
+            $reverbPort = (int) (config('broadcasting.connections.reverb.options.port') ?? 0);
+            $reverbScheme = config('broadcasting.connections.reverb.options.scheme') ?: request()->getScheme();
+
+            // Never expose bind addresses as websocket hosts for the browser.
+            // (These are valid for servers but not connectable from the client.)
+            $invalidHosts = ['0.0.0.0', '127.0.0.1', '::', '::1', 'localhost'];
+            if (! $reverbHost || in_array($reverbHost, $invalidHosts, true)) {
+                $reverbHost = request()->getHost();
+            }
+        @endphp
+        <meta name="reverb-app-key" content="{{ $reverbKey }}">
+        <meta name="reverb-host" content="{{ $reverbHost }}">
+        <meta name="reverb-port" content="{{ $reverbPort }}">
+        <meta name="reverb-scheme" content="{{ $reverbScheme }}">
 
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])

@@ -193,7 +193,7 @@ function CurrentContent({
 }
 
 export default function PresentationView({ series, week, initialState }: Props) {
-    const { state, isConnected } = usePresentation({
+    const { state, isConnected, connectionIssue } = usePresentation({
         weekId: week.id,
         initialState,
         isController: false,
@@ -231,7 +231,7 @@ export default function PresentationView({ series, week, initialState }: Props) 
                     </div>
                     <div className={`flex items-center gap-2 text-xs ${isConnected ? 'text-[#4ade80]' : 'text-[#fb923c]'}`}>
                         <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-[#4ade80]' : 'bg-[#fb923c] animate-pulse'}`} />
-                        {isConnected ? 'Connected' : 'Connecting...'}
+                        {isConnected ? 'Connected' : connectionIssue ?? 'Connecting...'}
                     </div>
                 </header>
 

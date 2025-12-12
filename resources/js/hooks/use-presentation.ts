@@ -10,11 +10,21 @@ interface UsePresentationOptions {
 export function usePresentation({ weekId, initialState, isController = false }: UsePresentationOptions) {
     const [state, setState] = useState<PresentationState>(initialState);
     const [isConnected, setIsConnected] = useState(false);
+    const [connectionIssue, setConnectionIssue] = useState<string | null>(null);
     const channelRef = useRef<ReturnType<typeof window.Echo.channel> | null>(null);
 
     // Subscribe to channel
     useEffect(() => {
-        if (typeof window === 'undefined' || !window.Echo) return;
+        if (typeof window === 'undefined') return;
+        if (!window.Echo) {
+            setIsConnected(false);
+            setConnectionIssue('Echo not initialized (window.Echo is missing)');
+            console.error('[Presentation] Echo not initialized. Check echo.ts init logs.', {
+                echoDebug: (window as any).__ECHO_DEBUG__,
+            });
+            return;
+        }
+        setConnectionIssue(null);
 
         const channel = window.Echo.channel(`presentation.${weekId}`);
         channelRef.current = channel;
@@ -26,10 +36,12 @@ export function usePresentation({ weekId, initialState, isController = false }: 
             })
             .subscribed(() => {
                 setIsConnected(true);
+                setConnectionIssue(null);
             })
             .error((error: unknown) => {
                 console.error('Channel error:', error);
                 setIsConnected(false);
+                setConnectionIssue('Channel error (see console)');
             });
 
         return () => {
@@ -159,6 +171,7 @@ export function usePresentation({ weekId, initialState, isController = false }: 
     return {
         state,
         isConnected,
+        connectionIssue,
         navigate,
         goToItem,
         toggleScripture,

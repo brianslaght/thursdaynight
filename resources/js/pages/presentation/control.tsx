@@ -132,6 +132,7 @@ export default function ControlCenter({ series, week, initialState, totalWeeks }
     const {
         state,
         isConnected,
+        connectionIssue,
         navigate,
         goToItem,
         toggleScripture,
@@ -194,7 +195,7 @@ export default function ControlCenter({ series, week, initialState, totalWeeks }
                         <div className="flex items-center gap-4">
                             <div className={`flex items-center gap-2 text-sm ${isConnected ? 'text-[#4ade80]' : 'text-[#fb923c]'}`}>
                                 <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-[#4ade80]' : 'bg-[#fb923c] animate-pulse'}`} />
-                                {isConnected ? 'Connected' : 'Connecting...'}
+                                {isConnected ? 'Connected' : connectionIssue ?? 'Connecting...'}
                             </div>
                             <a
                                 href={`/series/${series.slug}/week/${week.week_number}/present`}

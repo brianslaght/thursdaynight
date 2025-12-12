@@ -15,9 +15,10 @@ return [
     |
     */
 
-    // Default to Reverb so presentation syncing works out of the box.
-    // Tests can still override this (see phpunit.xml).
-    'default' => env('BROADCAST_CONNECTION', 'reverb'),
+    // IMPORTANT:
+    // - Default to "null" so the app can boot even if REVERB_* env vars are not set yet.
+    // - Enable Reverb by setting BROADCAST_CONNECTION=reverb and providing REVERB_APP_KEY/SECRET/APP_ID.
+    'default' => env('BROADCAST_CONNECTION', 'null'),
 
     /*
     |--------------------------------------------------------------------------
